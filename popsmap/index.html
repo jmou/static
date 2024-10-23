@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POPS Map</title>
+    <script src='https://unpkg.com/maplibre-gl/dist/maplibre-gl.js'></script>
+    <link href='https://unpkg.com/maplibre-gl/dist/maplibre-gl.css' rel='stylesheet' />
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        #filter-control, #details-panel {
+            position: absolute;
+            top: 10px;
+            z-index: 1;
+            background-color: white;
+            padding: 10px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border: 1px solid #ccc;
+            max-height: calc(100% - 40px);
+            overflow-y: auto;
+        }
+        #filter-control {
+            right: 10px;
+            width: 200px;
+        }
+        #details-panel {
+            left: 10px;
+            width: 300px;
+            display: none;
+        }
+        #filter-control select, #clear-filters {
+            margin-bottom: 5px;
+            width: 100%;
+        }
+        #filter-control label {
+            display: block;
+            font-weight: bold;
+        }
+        #clear-filters {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #clear-filters:hover {
+            background-color: #e0e0e0;
+        }
+        #gps-control {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1;
+            background-color: white;
+            padding: 5px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        #gps-control:hover {
+            background-color: #f0f0f0;
+        }
+        #close-details {
+            float: right;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="gps-control" title="Pan to current location">📍</div>
+    <div id="filter-control">
+        <label for="space-type-filter">Public Space Type:</label>
+        <select id="space-type-filter">
+            <option value="all">All Types</option>
+        </select>
+        <label for="amenity-filter">Amenity:</label>
+        <select id="amenity-filter">
+            <option value="all">All Amenities</option>
+        </select>
+        <label for="hours-filter">Hours of Access:</label>
+        <select id="hours-filter">
+            <option value="all">All Hours</option>
+        </select>
+        <button id="clear-filters">Clear Filters</button>
+    </div>
+    <div id="details-panel">
+        <span id="close-details">&times;</span>
+        <div id="details-content"></div>
+    </div>
+    <script>
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://tiles.openfreemap.org/styles/liberty',
+            center: [-74.0060, 40.7128],  // Center on NYC
+            zoom: 11
+        });
+
+        map.on('style.load', () => {
+            const layers = map.getStyle().layers;
+            for (const layer of layers) {
+                if (layer.type === 'fill-extrusion') {
+                    map.removeLayer(layer.id);
+                }
+            }
+        });
+
+        map.on('load', async () => {
+            map.addSource('pops', {
+                type: 'geojson',
+                data: 'pops.geojson'
+            });
+
+            map.addLayer({
+                'id': 'pops-polygon',
+                'type': 'fill',
+                'source': 'pops',
+                'paint': {
+                    'fill-color': '#ff7800',
+                    'fill-opacity': 0.7,
+                    'fill-outline-color': '#000'
+                },
+                'filter': ['==', ['geometry-type'], 'Polygon']
+            });
+
+            map.addLayer({
+                'id': 'pops-point',
+                'type': 'circle',
+                'source': 'pops',
+                'paint': {
+                    'circle-radius': 8,
+                    'circle-color': '#ff7800',
+                    'circle-stroke-width': 1,
+                    'circle-stroke-color': '#000',
+                    'circle-opacity': 0.7
+                },
+                'filter': ['==', ['geometry-type'], 'Point']
+            });
+
+            let highlightedFeatureId = null;
+            let lastClickedFeatureId = null;
+            let spaceTypes = {};
+            let amenities = {};
+            let hoursOfAccess = {};
+
+            // Populate space types, amenities, hours of access, and count occurrences
+            const sourceData = await map.getSource('pops').getData();
+            sourceData.features.forEach(feature => {
+                feature.properties.public_space_type.split('; ').forEach(type => {
+                    type = type.trim();
+                    spaceTypes[type] = (spaceTypes[type] || 0) + 1;
+                });
+                feature.properties.amenities_required.split('; ').forEach(amenity => {
+                    amenity = amenity.trim();
+                    amenities[amenity] = (amenities[amenity] || 0) + 1;
+                });
+                feature.properties.hour_of_access_required.split('; ').forEach(hours => {
+                    hours = hours.trim();
+                    hoursOfAccess[hours] = (hoursOfAccess[hours] || 0) + 1;
+                });
+            });
+
+            const spaceTypeFilter = document.getElementById('space-type-filter');
+            const amenityFilter = document.getElementById('amenity-filter');
+            const hoursFilter = document.getElementById('hours-filter');
+            const detailsPanel = document.getElementById('details-panel');
+            const detailsContent = document.getElementById('details-content');
+            const closeDetails = document.getElementById('close-details');
+
+            function populateFilter(filter, data) {
+                Object.entries(data)
+                    .sort((a, b) => b[1] - a[1])
+                    .forEach(([item, count]) => {
+                        const option = document.createElement('option');
+                        option.value = item;
+                        option.textContent = `${item === '' ? 'No data' : item} (${count})`;
+                        filter.appendChild(option);
+                    });
+            }
+
+            populateFilter(spaceTypeFilter, spaceTypes);
+            populateFilter(amenityFilter, amenities);
+            populateFilter(hoursFilter, hoursOfAccess);
+
+            function updateFilter() {
+                const selectedType = spaceTypeFilter.value;
+                const selectedAmenity = amenityFilter.value;
+                const selectedHours = hoursFilter.value;
+                let filter = ['all'];
+
+                function createFilterCondition(property, value) {
+                    if (value === '') {
+                        return ['==', ['get', property], ''];
+                    } else {
+                        return ['any',
+                            ['==', ['get', property], value],
+                            ['in', value, ['string', ['get', property]]]
+                        ];
+                    }
+                }
+
+                if (selectedType !== 'all') {
+                    filter.push(createFilterCondition('public_space_type', selectedType));
+                }
+
+                if (selectedAmenity !== 'all') {
+                    filter.push(createFilterCondition('amenities_required', selectedAmenity));
+                }
+
+                if (selectedHours !== 'all') {
+                    filter.push(createFilterCondition('hour_of_access_required', selectedHours));
+                }
+
+                map.setFilter('pops-polygon', filter.length > 1 ? filter : null);
+                map.setFilter('pops-point', filter.length > 1 ? filter : null);
+            }
+
+            spaceTypeFilter.addEventListener('change', updateFilter);
+            amenityFilter.addEventListener('change', updateFilter);
+            hoursFilter.addEventListener('change', updateFilter);
+
+            const clearFiltersButton = document.getElementById('clear-filters');
+            clearFiltersButton.addEventListener('click', () => {
+                spaceTypeFilter.value = 'all';
+                amenityFilter.value = 'all';
+                hoursFilter.value = 'all';
+                updateFilter();
+            });
+
+            async function createDetailsContent(properties) {
+                const response = await fetch(`/pops/${properties.pops_number}/details.html`);
+                if (response.ok) {
+                    return await response.text();
+                } else if (response.status === 404) {
+                    console.warn(`Failed to fetch details for ${properties.pops_number}: ${response.status}`);
+                    return `<h3>${properties.building_name}</h3>
+                            <p><strong>Address:</strong> ${properties.building_address_with_zip}</p>
+                            <p><strong>Year Completed:</strong> ${properties.year_completed}</p>
+                            <p><strong>Public Space Type:</strong> ${properties.public_space_type.split('; ').join(', ')}</p>
+                            <p><strong>Size Required:</strong> ${properties.size_required}</p>
+                            <p><strong>Hours of Access Required:</strong> ${properties.hour_of_access_required.split('; ').join(', ')}</p>
+                            <p><strong>Amenities Required:</strong> ${properties.amenities_required.split('; ').join(', ')}</p>
+                            <p><a href="https://apops.mas.org/pops/${properties.pops_number.toLowerCase()}/" target="_blank">View on APOPS</a></p>`;
+                } else {
+                    throw new Error(`Unexpected error fetching details for ${properties.pops_number}: ${response.status}`);
+                }
+            }
+
+            async function updateDetails(properties) {
+                const popsNumber = properties.pops_number;
+
+                if (highlightedFeatureId !== popsNumber) {
+                    if (highlightedFeatureId !== null) {
+                        updateFeatureStyle(highlightedFeatureId, false);
+                    }
+                    if (lastClickedFeatureId !== null && lastClickedFeatureId !== popsNumber) {
+                        updateFeatureStyle(lastClickedFeatureId, false);
+                    }
+                    updateFeatureStyle(popsNumber, true);
+                    highlightedFeatureId = popsNumber;
+
+                    detailsContent.innerHTML = await createDetailsContent(properties);
+                    detailsPanel.style.display = 'block';
+                }
+            }
+
+            function closeDetailsPanel() {
+                detailsPanel.style.display = 'none';
+                if (highlightedFeatureId !== null) {
+                    updateFeatureStyle(highlightedFeatureId, false);
+                    highlightedFeatureId = null;
+                }
+                map.getCanvas().style.cursor = '';
+            }
+
+            async function handlePOPSInteraction(e) {
+                const properties = e.features[0].properties;
+                if (lastClickedFeatureId !== null) {
+                    updateFeatureStyle(lastClickedFeatureId, false);
+                }
+                lastClickedFeatureId = properties.pops_number;
+                await updateDetails(properties);
+                updateFeatureStyle(properties.pops_number, true);
+            }
+
+            map.on('click', 'pops-polygon', handlePOPSInteraction);
+            map.on('click', 'pops-point', handlePOPSInteraction);
+
+            async function handlePOPSMouseMove(e) {
+                map.getCanvas().style.cursor = 'pointer';
+                const properties = e.features[0].properties;
+                await updateDetails(properties);
+            }
+
+            map.on('mousemove', 'pops-polygon', handlePOPSMouseMove);
+            map.on('mousemove', 'pops-point', handlePOPSMouseMove);
+
+            async function handlePOPSMouseLeave() {
+                map.getCanvas().style.cursor = '';
+                if (lastClickedFeatureId) {
+                    const feature = map.querySourceFeatures('pops', {
+                        filter: ['==', ['get', 'pops_number'], lastClickedFeatureId]
+                    })[0];
+                    if (feature) {
+                        await updateDetails(feature.properties);
+                    }
+                } else {
+                    closeDetailsPanel();
+                }
+            }
+
+            map.on('mouseleave', 'pops-polygon', handlePOPSMouseLeave);
+            map.on('mouseleave', 'pops-point', handlePOPSMouseLeave);
+
+            closeDetails.addEventListener('click', () => {
+                closeDetailsPanel();
+                lastClickedFeatureId = null;
+            });
+
+            function updateFeatureStyle(popsNumber, highlight) {
+                const highlightColor = highlight ? '#0000FF' : '#87CEFA';
+                const defaultColor = '#000';
+                const highlightWidth = highlight ? 3 : 2;
+                const defaultWidth = 1;
+
+                const strokeColor = [
+                    'case',
+                    ['==', ['get', 'pops_number'], popsNumber],
+                    highlightColor,
+                    ['==', ['get', 'pops_number'], lastClickedFeatureId],
+                    '#87CEFA',
+                    defaultColor
+                ];
+
+                const strokeWidth = [
+                    'case',
+                    ['==', ['get', 'pops_number'], popsNumber],
+                    highlightWidth,
+                    ['==', ['get', 'pops_number'], lastClickedFeatureId],
+                    2,
+                    defaultWidth
+                ];
+
+                map.setPaintProperty('pops-point', 'circle-stroke-color', strokeColor);
+                map.setPaintProperty('pops-point', 'circle-stroke-width', strokeWidth);
+
+                map.setPaintProperty('pops-polygon', 'fill-outline-color', strokeColor);
+                map.setPaintProperty('pops-polygon', 'fill-opacity', [
+                    'case',
+                    ['==', ['get', 'pops_number'], popsNumber],
+                    highlight ? 0.8 : 0.7,
+                    ['==', ['get', 'pops_number'], lastClickedFeatureId],
+                    0.7,
+                    0.7
+                ]);
+
+                // Add a new layer for polygon outlines
+                const outlineLayerId = 'pops-polygon-outline';
+                if (!map.getLayer(outlineLayerId)) {
+                    map.addLayer({
+                        'id': outlineLayerId,
+                        'type': 'line',
+                        'source': 'pops',
+                        'layout': {},
+                        'paint': {
+                            'line-color': strokeColor,
+                            'line-width': strokeWidth
+                        },
+                        'filter': ['==', ['geometry-type'], 'Polygon']
+                    });
+                } else {
+                    map.setPaintProperty(outlineLayerId, 'line-color', strokeColor);
+                    map.setPaintProperty(outlineLayerId, 'line-width', strokeWidth);
+                }
+            }
+
+            // GPS location functionality
+            const gpsControl = document.getElementById('gps-control');
+            gpsControl.addEventListener('click', () => {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        map.flyTo({
+                            center: [lon, lat],
+                            zoom: 15
+                        });
+                        new maplibregl.Marker()
+                            .setLngLat([lon, lat])
+                            .addTo(map);
+                    }, () => {
+                        alert("Unable to retrieve your location");
+                    });
+                } else {
+                    alert("Geolocation is not supported by your browser");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
