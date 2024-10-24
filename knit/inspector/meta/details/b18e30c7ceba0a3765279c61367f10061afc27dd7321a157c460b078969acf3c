@@ -1,0 +1,2 @@
+<pre>&lt;div hx-get="steps.svg" hx-trigger=load&gt;&lt;/div&gt;
+</pre>

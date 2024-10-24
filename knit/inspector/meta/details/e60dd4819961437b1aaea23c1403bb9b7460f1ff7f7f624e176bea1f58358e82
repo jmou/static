@@ -1,0 +1,13 @@
+<div hx-get="details/a973fc1553f010aafce482f1ef092706f3c3f982c3424d5dce1aea60a8db085c" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>Log</h3><div hx-get="details/5095495c37bd8bc53773edad579fd8fdf4f91e62725dbe457171e5f39909359f" hx-trigger=load></div>
+<h3>details/14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978</h3><div hx-get="details/9250509ff683b76f89115ba9a602edb26d5b941600760f0f21022b3f082a04b9" hx-trigger=load></div>
+<h3>details/2e30bbbb2bec157f92e4b4cc80a18d70c0be6b42ec31056bd8c03919661473b4</h3><div hx-get="details/e76b5480cc576d4e7922f718d988e3874e2a77586163e544981244d3abf503d7" hx-trigger=load></div>
+<h3>details/382876d1a0198b634df0f36dd3f5901baa1c5bfaee7771e17aaa3ac5b34973e3</h3><div hx-get="details/b18e30c7ceba0a3765279c61367f10061afc27dd7321a157c460b078969acf3c" hx-trigger=load></div>
+<h3>details/409cab0ee98ed4b48dff0e2bc11bf8e243e2461f02ff126fdc064600a4d9fe3d</h3><div hx-get="details/46531fe835b09193896cf400466ac89abd1b9e850b57dc5f5e996564a29085b0" hx-trigger=load></div>
+<h3>details/4d8c1a6ec8c4b8c851bc0114b21375c8fc5b18e0d3bc6fd984443c7f1ddbfa20</h3><div hx-get="details/f5600f11b2736c199d8fb2b1e3193e9213cdd3c6778fb7123db83a193eb2a24b" hx-trigger=load></div>
+<h3>details/61d9fc8909a0e5784b27cb8c6d833076cb36e4d46e754c1097bbf22671a8797c</h3><div hx-get="details/ed3a593ee3331e92b9c3b9471b563e2a8cf48d66c5896ac14eeb14bfd32bb8ad" hx-trigger=load></div>
+<h3>details/707deabe3aaaca8decae527b7f392dc3a3294745ddbcb17a65cb4d9f0ed3f5c0</h3><div hx-get="details/0c7b50b139daa447abd941398dae7416050ad37ddc035f9a0fe299b6cc63c354" hx-trigger=load></div>
+<h3>details/a02b0b68f1f4a7783823c203e567b6194ca0ba7defa46af5f753942e778e385b</h3><div hx-get="details/174c4eb21f5038bf72261bd38e66c584f9956a7429ac6d59cb0cb484a1d0b5ff" hx-trigger=load></div>
+<h3>graph.dot</h3><div hx-get="details/22d4863d581dc4df82c772707b3a0a9d5d62090681e24a21b90cbc97e3720f2e" hx-trigger=load></div>
+<h3>planmap</h3><div hx-get="details/b8d46b9c6962a4e3511a86dd0625481ad5324dd7f35b01ac10cb296c318c3eaf" hx-trigger=load></div>

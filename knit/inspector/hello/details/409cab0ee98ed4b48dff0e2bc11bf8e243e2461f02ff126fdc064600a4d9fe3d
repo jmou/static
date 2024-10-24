@@ -1,0 +1,2 @@
+<pre>echo "Hello, $subject!" &gt; out/result
+</pre>

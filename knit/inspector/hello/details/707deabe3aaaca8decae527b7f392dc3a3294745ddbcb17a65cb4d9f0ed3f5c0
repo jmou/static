@@ -1,0 +1,3 @@
+<h2>Inputs</h2>
+<h3>Identity</h3>
+<h3>subject</h3><div hx-get="details/14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978" hx-trigger=load></div>

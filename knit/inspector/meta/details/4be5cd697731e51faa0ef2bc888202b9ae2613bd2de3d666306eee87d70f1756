@@ -1,0 +1,32 @@
+<pre>knit init
+
+inv=$(knit peel-spec $production^{invocation})
+
+cat &gt; out/index.html &lt;&lt;EOF
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;!-- &lt;meta http-equiv=refresh content=5&gt; --&gt;
+  &lt;link href="static/style.css" rel=stylesheet&gt;
+  &lt;script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"&gt;&lt;/script&gt;
+  &lt;script src="static/script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="select('$inv')"&gt;
+
+&lt;div class=column&gt;
+&lt;h1&gt;Objects&lt;/h1&gt;
+&lt;section id=objects&gt;$(&lt; in/objects.svg)&lt;/section&gt;
+&lt;/div&gt;
+
+&lt;div class=column&gt;
+&lt;h1&gt;Plan&lt;/h1&gt;
+&lt;section id=plan&gt;$(&lt; in/plan)&lt;/section&gt;
+
+&lt;h1&gt;Details&lt;/h1&gt;
+&lt;section id=details&gt;&lt;/section&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
+</pre>

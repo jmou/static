@@ -1,0 +1,4 @@
+<h2>Inputs</h2>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>graph.dot</h3><div hx-get="details/22d4863d581dc4df82c772707b3a0a9d5d62090681e24a21b90cbc97e3720f2e" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/90a4b76d97afe135cd7689b5e399465297d17f29aaea83aa8c30c155a5719bb0" hx-trigger=load></div>

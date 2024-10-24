@@ -1,0 +1,4 @@
+<div hx-get="details/dc0bdfac24a87f17644ed5e3ff1d0628185db59e26bfc730665992b8767b0a65" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>Log</h3><div hx-get="details/82f246b8213c7b02b228863b496e9f33ca1aefb9ac81c7980adbc5bfb1ac448c" hx-trigger=load></div>
+<h3>plan</h3><div hx-get="details/95fd70db492112f51acda464a2ff9a15d77c34e1411f5070e78c1d1140c9ff06" hx-trigger=load></div>

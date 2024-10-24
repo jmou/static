@@ -1,0 +1,5 @@
+<h2>Inputs</h2>
+<h3>Command</h3><pre>cmd /usr/bin/python3 in/script.py</pre>
+<h3>plan</h3><div hx-get="details/95fd70db492112f51acda464a2ff9a15d77c34e1411f5070e78c1d1140c9ff06" hx-trigger=load></div>
+<h3>planmap</h3><div hx-get="details/b8d46b9c6962a4e3511a86dd0625481ad5324dd7f35b01ac10cb296c318c3eaf" hx-trigger=load></div>
+<h3>script.py</h3><div hx-get="details/64b6c6d22d7fdadf7e618a2b62f14d88b5bc95f5d2f05f28c224de3b1bb87490" hx-trigger=load></div>

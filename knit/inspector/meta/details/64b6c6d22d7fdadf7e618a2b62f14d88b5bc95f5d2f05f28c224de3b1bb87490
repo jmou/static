@@ -1,0 +1,90 @@
+<pre>import itertools
+import re
+from collections import namedtuple
+from html import escape as q
+
+class Step:
+    def __init__(self, name, oid):
+        self.name = name
+        self.oid = oid
+        self.job = 'nojob'
+        self.deps = set()
+        self.inputs = {}
+        self.outputs = {}
+
+steps = {}
+
+step = None
+inv = None
+for line in open("in/planmap"):
+    kind, oid, name = line.rstrip("\n").split(" ", 2)
+    if kind == "invocation":
+        inv = oid
+    elif kind == "step":
+        step = Step(name, oid)
+        steps[name] = step
+    elif kind == "job":
+        assert step is not None
+        step.job = oid
+    elif kind == "input":
+        assert step is not None
+        step.inputs[name] = oid
+    elif kind == "output":
+        assert step is not None
+        step.outputs[name] = oid
+    else:
+        raise Exception("unknown kind", kind)
+
+step = None
+should_emit_outputs = False
+
+STEP_RE = re.compile(r"^((step|partial) ([^ :]+))(.*)$")
+def step_repl(m):
+    global should_emit_outputs, step
+    if m[2] == "step":
+        step = steps[m[3]]
+        should_emit_outputs = True
+        return f'&lt;span data-oid="{step.oid}" data-inert-oid="{step.job}"&gt;{q(m[1])}&lt;/span&gt;{q(m[4])}'
+    else:
+        step = None
+        should_emit_outputs = False
+        return q(m[0])
+
+INPUT_RE = re.compile(r'^( +)([^ =#]+)( *= *)(([^:"]+):.*|.*)$')
+def input_repl(m):
+    if step is not None:
+        if m[5]:
+            step.deps.add(m[5])
+        oid = f"{step.name}:{m[2]}" if m[2].endswith("/") else step.inputs[m[2]]
+        return f'{m[1]}&lt;span data-oid="{oid}"&gt;{q(m[2])}&lt;/span&gt;{m[3]}&lt;span data-oid="{oid}"&gt;{q(m[4])}&lt;/span&gt;'
+    else:
+        return q(m[0])
+
+fh = open("out/plan", "w")
+print(f"&lt;pre data-inert-oid={inv}&gt;", file=fh)
+
+# chain empty line to trigger any should_emit_outputs at EOF.
+for line in itertools.chain(open("in/plan"), [""]):
+    line = line.rstrip("\n")
+
+    # Heuristically add outputs at end of step.
+    if should_emit_outputs and (not line or STEP_RE.match(line)):
+        for output, oid in step.outputs.items(): # type: ignore
+            print(f'    ##output &lt;span data-oid="{oid}"&gt;{q(output)}&lt;/span&gt;', file=fh)
+        should_emit_outputs = False
+
+    line = STEP_RE.sub(step_repl, line)
+    line = INPUT_RE.sub(input_repl, line)
+    print(line, file=fh)
+
+print("&lt;/pre&gt;", file=fh)
+
+# TODO details for inputs/outputs?
+with open("out/steps.dot", "w") as fh:
+    print("digraph {", file=fh)
+    for step in steps.values():
+        print(f'  "{step.name}";', file=fh)
+        for dep in step.deps:
+            print(f'  "{dep}" -&gt; "{step.name}";', file=fh)
+    print("}", file=fh)
+</pre>

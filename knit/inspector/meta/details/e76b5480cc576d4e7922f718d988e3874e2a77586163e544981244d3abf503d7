@@ -1,0 +1,4 @@
+<pre>&lt;div hx-get="details/707deabe3aaaca8decae527b7f392dc3a3294745ddbcb17a65cb4d9f0ed3f5c0" hx-trigger=load&gt;&lt;/div&gt;
+&lt;h2&gt;Outputs&lt;/h2&gt;
+&lt;h3&gt;subject&lt;/h3&gt;&lt;div hx-get="details/14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978" hx-trigger=load&gt;&lt;/div&gt;
+</pre>

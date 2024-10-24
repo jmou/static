@@ -1,0 +1,6 @@
+<pre>digraph {
+  "hello";
+  "world" -&gt; "hello";
+  "world";
+}
+</pre>

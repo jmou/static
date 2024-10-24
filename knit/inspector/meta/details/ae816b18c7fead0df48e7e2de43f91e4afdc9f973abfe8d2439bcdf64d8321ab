@@ -1,0 +1,122 @@
+<pre>quote_id() {
+    echo \"$1:${2:0:6}\"
+}
+
+node() {
+    local name=$(quote_id $1 $2)
+    local id=$2
+    shift 2
+    echo "$name [id=\"$id\",tooltip=\"$(IFS=$'\n' ; echo "$*")\"];"
+}
+
+html_escape() {
+    sed 's/&amp;/\&amp;amp;/g; s/&lt;/\&amp;lt;/g; s/&gt;/\&amp;gt;/g'
+}
+
+emit_resource() {
+    local tooltip
+    [[ -e out/details/$1 ]] &amp;&amp; return
+
+    knit cat-file resource $1 &gt; res.tmp
+    tooltip="$(file res.tmp)"
+    if [[ $tooltip = *text* ]]; then
+        tooltip="$(&lt; out/details/$1)"
+        echo -n '&lt;pre&gt;'
+        html_escape &lt; res.tmp
+        echo '&lt;/pre&gt;'
+    else
+        echo "$tooltip&lt;br&gt;$(wc -c &lt; res.tmp) bytes"
+    fi &gt; out/details/$1
+    rm res.tmp
+
+    node res $1 "$tooltip"
+}
+
+emit_job() {
+    local -a tooltip
+    [[ -e out/details/$1 ]] &amp;&amp; return
+
+    exec 3&gt; out/details/$1
+    echo '&lt;h2&gt;Inputs&lt;/h2&gt;' &gt;&amp;3
+    while read -r res input; do
+        if [[ $input == .knit/cmd ]]; then
+            tooltip+=("cmd $(knit cat-file resource $res | tr \\0 ' ')")
+            echo "&lt;h3&gt;Command&lt;/h3&gt;&lt;pre&gt;$(html_escape &lt;&lt;&lt; "$tooltip")&lt;/pre&gt;" &gt;&amp;3
+        elif [[ $input == .knit/identity ]]; then
+            tooltip+=(identity)
+            echo '&lt;h3&gt;Identity&lt;/h3&gt;' &gt;&amp;3
+        else
+            emit_resource $res
+            echo "&lt;h3&gt;$(html_escape &lt;&lt;&lt; "$input")&lt;/h3&gt;&lt;div hx-get=\"details/$res\" hx-trigger=load&gt;&lt;/div&gt;" &gt;&amp;3
+            echo "$(quote_id job $1) -&gt; $(quote_id res $res) [label=\"$input\"];"
+            echo "input $res $input" &gt;&gt; out/planmap
+        fi
+    done &lt; &lt;(knit cat-file -p $1)
+    exec 3&gt;&amp;-
+    node job $1 "${tooltip[@]}"
+    echo "job $1 _" &gt;&gt; out/planmap
+}
+
+emit_production() {
+    local res output tooltip details
+    details=out/details/$1
+    [[ -e $details ]] &amp;&amp; return
+
+    knit cat-file -p $1 | sed '/^$/q' | while read -r link oid; do
+        if [[ $link == job ]]; then
+            emit_job $oid
+            echo "&lt;div hx-get=\"details/$oid\" hx-trigger=load&gt;&lt;/div&gt;" &gt;&gt; $details
+            echo "$(quote_id prd $prd) -&gt; $(quote_id job $oid);"
+        else
+            echo skipping $link in production $1 &gt;&amp;2
+        fi
+    done
+
+    echo '&lt;h2&gt;Outputs&lt;/h2&gt;' &gt;&gt; $details
+    tooltip=()
+    while read -r res output; do
+        if [[ $output == .knit/exitcode ]]; then
+            tooltip+=("exitcode $(knit cat-file res $res)")
+        elif [[ $output == .knit/log ]]; then
+            echo "&lt;h3&gt;Log&lt;/h3&gt;&lt;div hx-get=\"details/$res\" hx-trigger=load&gt;&lt;/div&gt;" &gt;&gt; $details
+        elif [[ $output == .knit/ok ]]; then
+            tooltip+=(ok)
+        else
+            emit_resource $res
+            echo "&lt;h3&gt;$(html_escape &lt;&lt;&lt; "$output")&lt;/h3&gt;&lt;div hx-get=\"details/$res\" hx-trigger=load&gt;&lt;/div&gt;" &gt;&gt; $details
+            echo "$(quote_id prd $1) -&gt; $(quote_id res $res) [label=\"$output\"];"
+            echo "output $res $output" &gt;&gt; out/planmap
+        fi
+    done &lt; &lt;(knit cat-file -p $1 | sed '1,/^$/d')
+    node prd $1 "${tooltip[@]}"
+}
+
+emit_invocation() {
+    local status prd step
+    details=out/details/$1
+    [[ -e $details ]] &amp;&amp; return
+    node inv $1
+    echo "invocation $1 _" &gt;&gt; out/planmap
+    knit cat-file -p $1 | sed '1,/^$/d' | while read -r status _ prd step; do
+        if [[ $status != f ]]; then
+            echo unfinished step "$step" &gt;&amp;2
+            continue
+        fi
+        echo "$(quote_id inv $1) -&gt; $(quote_id prd $prd) [label=\"$step\"];"
+        echo "step $prd $step" &gt;&gt; out/planmap
+        emit_production $prd
+    done
+    echo "&lt;div hx-get=\"steps.svg\" hx-trigger=load&gt;&lt;/div&gt;" &gt; $details
+}
+
+knit init
+mkdir out/details
+
+exec &gt; out/graph.dot
+
+echo digraph {
+echo '  rankdir=LR;'
+echo '  node [shape=box,style=filled,fillcolor=white];'
+emit_invocation $(knit peel-spec $production^{invocation})
+echo }
+</pre>

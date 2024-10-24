@@ -1,0 +1,1 @@
+<pre>knit init &amp;&amp; knit cat-file -p $production^:.knit/flow &gt; out/plan</pre>

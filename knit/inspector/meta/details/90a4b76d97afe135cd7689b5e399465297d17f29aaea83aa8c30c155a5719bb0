@@ -1,0 +1,1 @@
+<pre>dot -Tsvg -o out/result.svg in/graph.dot</pre>

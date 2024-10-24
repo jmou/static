@@ -1,0 +1,15 @@
+<pre>&lt;pre data-inert-oid=382876d1a0198b634df0f36dd3f5901baa1c5bfaee7771e17aaa3ac5b34973e3&gt;
+&lt;span data-oid="2e30bbbb2bec157f92e4b4cc80a18d70c0be6b42ec31056bd8c03919661473b4" data-inert-oid="707deabe3aaaca8decae527b7f392dc3a3294745ddbcb17a65cb4d9f0ed3f5c0"&gt;step world&lt;/span&gt;: identity
+    &lt;span data-oid="14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978"&gt;subject&lt;/span&gt; = &lt;span data-oid="14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978"&gt;&amp;quot;World&amp;quot;&lt;/span&gt;
+    ##output &lt;span data-oid="14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978"&gt;subject&lt;/span&gt;
+
+partial bash: cmd &amp;quot;/bin/bash\0-e\0in/script&amp;quot;
+    script = !
+
+&lt;span data-oid="a02b0b68f1f4a7783823c203e567b6194ca0ba7defa46af5f753942e778e385b" data-inert-oid="4d8c1a6ec8c4b8c851bc0114b21375c8fc5b18e0d3bc6fd984443c7f1ddbfa20"&gt;step hello&lt;/span&gt;: partial bash
+    &lt;span data-oid="409cab0ee98ed4b48dff0e2bc11bf8e243e2461f02ff126fdc064600a4d9fe3d"&gt;script&lt;/span&gt; = &lt;span data-oid="409cab0ee98ed4b48dff0e2bc11bf8e243e2461f02ff126fdc064600a4d9fe3d"&gt;./hello.sh&lt;/span&gt;
+    &lt;span data-oid="14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978"&gt;$subject&lt;/span&gt; = &lt;span data-oid="14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978"&gt;world:subject&lt;/span&gt;
+    ##output &lt;span data-oid="61d9fc8909a0e5784b27cb8c6d833076cb36e4d46e754c1097bbf22671a8797c"&gt;result&lt;/span&gt;
+
+&lt;/pre&gt;
+</pre>

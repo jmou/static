@@ -1,0 +1,4 @@
+<div hx-get="details/bafbab179ca13fdea834d36c2af0b49ed0426cd11c8d6bf23eec100b49ee0887" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>plan</h3><div hx-get="details/8dcd438da0e8306b6fcbe1b1fb16870d2f85e340e51ceadadad7f015c4b67160" hx-trigger=load></div>
+<h3>steps.dot</h3><div hx-get="details/00ccbd2d9b0c0860c8563bb785bda5715361366d8f997e0e4f7294a006346d9d" hx-trigger=load></div>

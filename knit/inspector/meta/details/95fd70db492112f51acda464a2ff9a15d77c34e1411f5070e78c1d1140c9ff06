@@ -1,0 +1,10 @@
+<pre>step world: identity
+    subject = "World"
+
+partial bash: cmd "/bin/bash\0-e\0in/script"
+    script = !
+
+step hello: partial bash
+    script = ./hello.sh
+    $subject = world:subject
+</pre>

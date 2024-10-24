@@ -1,0 +1,23 @@
+<pre>digraph {
+  rankdir=LR;
+  node [shape=box,style=filled,fillcolor=white];
+"inv:382876" [id="382876d1a0198b634df0f36dd3f5901baa1c5bfaee7771e17aaa3ac5b34973e3",tooltip=""];
+"inv:382876" -&gt; "prd:a02b0b" [label="hello"];
+"res:14e11d" [id="14e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978",tooltip=""];
+"job:4d8c1a" -&gt; "res:14e11d" [label="$subject"];
+"res:409cab" [id="409cab0ee98ed4b48dff0e2bc11bf8e243e2461f02ff126fdc064600a4d9fe3d",tooltip=""];
+"job:4d8c1a" -&gt; "res:409cab" [label="script"];
+"job:4d8c1a" [id="4d8c1a6ec8c4b8c851bc0114b21375c8fc5b18e0d3bc6fd984443c7f1ddbfa20",tooltip="cmd /bin/bash -e in/script"];
+"prd:a02b0b" -&gt; "job:4d8c1a";
+"res:61d9fc" [id="61d9fc8909a0e5784b27cb8c6d833076cb36e4d46e754c1097bbf22671a8797c",tooltip=""];
+"prd:a02b0b" -&gt; "res:61d9fc" [label="result"];
+"prd:a02b0b" [id="a02b0b68f1f4a7783823c203e567b6194ca0ba7defa46af5f753942e778e385b",tooltip="exitcode 0
+ok"];
+"inv:382876" -&gt; "prd:2e30bb" [label="world"];
+"job:707dea" -&gt; "res:14e11d" [label="subject"];
+"job:707dea" [id="707deabe3aaaca8decae527b7f392dc3a3294745ddbcb17a65cb4d9f0ed3f5c0",tooltip="identity"];
+"prd:2e30bb" -&gt; "job:707dea";
+"prd:2e30bb" -&gt; "res:14e11d" [label="subject"];
+"prd:2e30bb" [id="2e30bbbb2bec157f92e4b4cc80a18d70c0be6b42ec31056bd8c03919661473b4",tooltip="ok"];
+}
+</pre>

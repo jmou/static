@@ -1,0 +1,30 @@
+<h2>Inputs</h2>
+<h3>$KNIT_DIR</h3><div hx-get="details/3fff906263928e1a895433455b30c1c770af426a528c611d360d36e84aac5dc5" hx-trigger=load></div>
+<h3>$production</h3><div hx-get="details/d2b932bf8a5314bc7e51146dd2cfe60de98a0c0aadf997e97fff19efa160e828" hx-trigger=load></div>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>knitdir/cache/4d/8c1a6ec8c4b8c851bc0114b21375c8fc5b18e0d3bc6fd984443c7f1ddbfa20</h3><div hx-get="details/2fdbbdebe7bcda5f8817c4f92ea7433a3d3874928dd7daff955c815dbe024af8" hx-trigger=load></div>
+<h3>knitdir/cache/6a/e4c5b46ce8160c25ce1d5dc5cae6a03fd0ec0d7aada0e4bfde54664851a2a0</h3><div hx-get="details/bc0aeab298bc6b6c25a3542deba786f503db71e571e0acf8627ed9ff9107829e" hx-trigger=load></div>
+<h3>knitdir/cache/70/7deabe3aaaca8decae527b7f392dc3a3294745ddbcb17a65cb4d9f0ed3f5c0</h3><div hx-get="details/a06d9269f7eb49388d78233064c0aca093a971e08cbef4b502cefd3391c37a0f" hx-trigger=load></div>
+<h3>knitdir/history</h3><div hx-get="details/bc0aeab298bc6b6c25a3542deba786f503db71e571e0acf8627ed9ff9107829e" hx-trigger=load></div>
+<h3>knitdir/objects/14/e11d5c21f173176b2744bea4f9c335bed68215b3996a2417860cc9fcc87978</h3><div hx-get="details/b07c488fa5609acb652fb66de7d53cb30900bf725c96a179bce53a522e46359f" hx-trigger=load></div>
+<h3>knitdir/objects/2e/30bbbb2bec157f92e4b4cc80a18d70c0be6b42ec31056bd8c03919661473b4</h3><div hx-get="details/b93a3cfd973f33bd8b4f09e9084d034190b501de5811c34c2b02bc69e48c1ab1" hx-trigger=load></div>
+<h3>knitdir/objects/2f/dbbdebe7bcda5f8817c4f92ea7433a3d3874928dd7daff955c815dbe024af8</h3><div hx-get="details/77666a31b3428f5eee86145ccc91c93e87a15532c623c20d9a74dc2dcc8491cc" hx-trigger=load></div>
+<h3>knitdir/objects/38/2876d1a0198b634df0f36dd3f5901baa1c5bfaee7771e17aaa3ac5b34973e3</h3><div hx-get="details/39fb3d0c7800d19f822764fca2b2e0374b05d21a58e1bc1f6d97c1874bb09473" hx-trigger=load></div>
+<h3>knitdir/objects/40/9cab0ee98ed4b48dff0e2bc11bf8e243e2461f02ff126fdc064600a4d9fe3d</h3><div hx-get="details/1dc6f4b24ccd6322ca6ae770adefb4a95215bd9408ba99439774b784be365237" hx-trigger=load></div>
+<h3>knitdir/objects/4d/8c1a6ec8c4b8c851bc0114b21375c8fc5b18e0d3bc6fd984443c7f1ddbfa20</h3><div hx-get="details/ce984d057586c2141175c96346933df9856e8ed9e3a858de9d90ce7cf0a8e0c7" hx-trigger=load></div>
+<h3>knitdir/objects/50/44d0865c8645adefa98e20c9c1168a09c94f1d02ac491f59503152b796f5d3</h3><div hx-get="details/36bd67f4e3c062de5582f800544b2e4df069bd008337653d7504769bee79fdfd" hx-trigger=load></div>
+<h3>knitdir/objects/61/d9fc8909a0e5784b27cb8c6d833076cb36e4d46e754c1097bbf22671a8797c</h3><div hx-get="details/e821b7117b075a027d131a53eaf3b656e3b388d2d0cdc29bdc9ce86da93c1386" hx-trigger=load></div>
+<h3>knitdir/objects/6a/e4c5b46ce8160c25ce1d5dc5cae6a03fd0ec0d7aada0e4bfde54664851a2a0</h3><div hx-get="details/432d79510e8bf6cf475a766a17f984b36a934aa7ac85ed6c561809f1b60caca1" hx-trigger=load></div>
+<h3>knitdir/objects/70/7deabe3aaaca8decae527b7f392dc3a3294745ddbcb17a65cb4d9f0ed3f5c0</h3><div hx-get="details/d32e2ec945896012aa6ad5c4ea0dbaf613e824de5da039923300ae465f6802b0" hx-trigger=load></div>
+<h3>knitdir/objects/95/fd70db492112f51acda464a2ff9a15d77c34e1411f5070e78c1d1140c9ff06</h3><div hx-get="details/6d215832e02b57ec44d1142e8c2eacaa034f643a4fd01bde9c6ce3d0a811c07e" hx-trigger=load></div>
+<h3>knitdir/objects/a0/2b0b68f1f4a7783823c203e567b6194ca0ba7defa46af5f753942e778e385b</h3><div hx-get="details/79b9a25f52aab546a245fa3d691915708e71239ef172f562ab33578f67bdb6c1" hx-trigger=load></div>
+<h3>knitdir/objects/a0/6d9269f7eb49388d78233064c0aca093a971e08cbef4b502cefd3391c37a0f</h3><div hx-get="details/ac67ee11e837171e34765ad18a81a7cafb2eea6ccaaaa28b12613ef2239eaee5" hx-trigger=load></div>
+<h3>knitdir/objects/b1/64614609c3675da3262e1cc4ce7924d6059852cd7d345ba2df3c23822cc0ab</h3><div hx-get="details/40877f9b0f8f2f85a8f778a0cec696ae83f1b02770f3e920e1c0a04399dcb751" hx-trigger=load></div>
+<h3>knitdir/objects/bc/0aeab298bc6b6c25a3542deba786f503db71e571e0acf8627ed9ff9107829e</h3><div hx-get="details/4d7ab13dc73eda5659b1cbd9d984bab0d157c913f86b3b74dbdd04e47b7fb682" hx-trigger=load></div>
+<h3>knitdir/objects/cd/233c478245081fddeec453504fe0a74c6c61f50698e4ae4b48e5dcccd6b941</h3><div hx-get="details/238a956cbd605824551db69fe5e63c9fd80786b8fad1c46a08df658970990d89" hx-trigger=load></div>
+<h3>knitdir/objects/d3/145f55dd4acec552205bf8dcb68b49a7ac773f89246398613430a9b0080cd5</h3><div hx-get="details/56c1bf425c5fc7cfcbacf8989193c23f6441a467224fbf766aaea58d3ec705e4" hx-trigger=load></div>
+<h3>knitdir/objects/dd/0f970a6944d8e830b31caf0d07efa8cf1104c0a1ee703e5e35541fcf1de1a3</h3><div hx-get="details/2650a425df2c2d3c295d996d605729167af3f8c4220f8ad548e5b38c706c2705" hx-trigger=load></div>
+<h3>knitdir/objects/f9/9c69e55e50aea5699b9a86ef0325a6cd907f9a5927458f14d456f226525fbd</h3><div hx-get="details/28a400e9c6455040b3b1ee7726cbe38d16545cab9b28a44b8f72b28da02cb9b0" hx-trigger=load></div>
+<h3>objects.svg</h3><div hx-get="details/9a5e23a16f23ac7087921fffc83c642022e332f7fd9ec1c10c2aff217c55f6ac" hx-trigger=load></div>
+<h3>plan</h3><div hx-get="details/8dcd438da0e8306b6fcbe1b1fb16870d2f85e340e51ceadadad7f015c4b67160" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/4be5cd697731e51faa0ef2bc888202b9ae2613bd2de3d666306eee87d70f1756" hx-trigger=load></div>
