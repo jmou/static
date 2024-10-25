@@ -1,0 +1,20 @@
+<pre>source in/env
+
+exec &gt; out/html
+
+[[ -n $building_name ]] &amp;&amp; echo "&lt;h3&gt;$building_name&lt;/h3&gt;"
+
+cat &lt;&lt;EOF
+&lt;p&gt;&lt;strong&gt;Address:&lt;/strong&gt; $building_address_with_zip
+&lt;p&gt;&lt;strong&gt;Year Completed:&lt;/strong&gt; $year_completed
+&lt;p&gt;&lt;strong&gt;Public Space Type:&lt;/strong&gt; ${public_space_type//; /, }
+&lt;p&gt;&lt;strong&gt;Size Required:&lt;/strong&gt; $size_required
+&lt;p&gt;&lt;strong&gt;Hours of Access Required:&lt;/strong&gt; ${hour_of_access_required//; /, }
+&lt;p&gt;&lt;strong&gt;Amenities Required:&lt;/strong&gt; ${amenities_required//; /, }
+&lt;p&gt;&lt;img src="pops/$pops_number/site-plan.png" style="width: 100%"&gt;
+&lt;p&gt;&lt;a href="https://apops.mas.org/pops/${pops_number,,}/"&gt;View on APOPS ($num_submissions user submissions)&lt;/a&gt;
+EOF
+
+sed '/Jerold S\. Kayden/d;s/^/&lt;p&gt;/g' in/profile.txt
+echo
+</pre>

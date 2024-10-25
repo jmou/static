@@ -1,0 +1,1 @@
+<pre>if [[ $limit -eq 0 ]]; then cp in/data out/; else head -n $(($limit+1)) in/data &gt; out/data; fi</pre>

@@ -1,0 +1,1 @@
+<pre>echo -n "BIN IN ($(&lt; in/pops.csv nix run nixpkgs#xsv select bin | tail -n+2 | grep -vxF '""' | paste -sd, -))" &gt; out/data</pre>

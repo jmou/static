@@ -1,0 +1,5 @@
+<h2>Inputs</h2>
+<h3>$limit</h3><div hx-get="details/ff05e780eec90a0e302d3620e7d14831170762487820515b17808fc520b77d07" hx-trigger=load></div>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>data</h3><div hx-get="details/685e01ed17b99de9150fd95e8997b57ec1e5b01970121686d925ca38bc5898f8" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/1efd1ad8aecdfd77c7d6304f6844893cc3afa9c4eefc17f74e4b7f500f5b9bc8" hx-trigger=load></div>

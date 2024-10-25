@@ -1,0 +1,197 @@
+<pre>{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.0148239,
+              40.7082001
+            ],
+            [
+              -74.01501,
+              40.7082661
+            ],
+            [
+              -74.0151823,
+              40.7079847
+            ],
+            [
+              -74.0149392,
+              40.7078985
+            ],
+            [
+              -74.0147471,
+              40.7078304
+            ],
+            [
+              -74.0147441,
+              40.7078352
+            ],
+            [
+              -74.0145748,
+              40.7081118
+            ],
+            [
+              -74.0148239,
+              40.7082001
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pops_number": "M010023",
+        "borough_name": "Manhattan",
+        "borocode": "1",
+        "community_district": "1",
+        "address_number": "90",
+        "street_name": "WASHINGTON STREET",
+        "zip_code": "10006",
+        "building_address_with_zip": "90 WASHINGTON STREET, New York, NY 10006",
+        "tax_block": "17",
+        "tax_lot": "29",
+        "building_name": "",
+        "building_location": "Bounded by Washington, West, and Rector Streets",
+        "year_completed": "1968",
+        "building_constructed": "Completed",
+        "public_space_type": "Plaza",
+        "developer": "",
+        "building_architect": "Fred Safran",
+        "principal_public_space": "Fred Safran",
+        "size_required": "Plaza 8789.00 sf",
+        "hour_of_access_required": "24 Hours",
+        "amenities_required": "Bicycle Parking; Lighting; Planting; Plaque/Sign; Seating; Trees within Space",
+        "other_required": "",
+        "permitted_amenities": "",
+        "physically_disabled": "Full/Partial",
+        "xcoordinate": "980133",
+        "ycoordinate": "197247",
+        "council_district": "1",
+        "census_tract": "13",
+        "bin": "1000793",
+        "bbl": "1000170029",
+        "nta": "",
+        "geocoded_column": "POINT (-74.01485 40.708074)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -73.9773642,
+              40.7625474
+            ],
+            [
+              -73.9778206,
+              40.7627398
+            ],
+            [
+              -73.9779574,
+              40.7627975
+            ],
+            [
+              -73.9780156,
+              40.7627176
+            ],
+            [
+              -73.9780793,
+              40.7627444
+            ],
+            [
+              -73.9781188,
+              40.7626903
+            ],
+            [
+              -73.9781629,
+              40.7626298
+            ],
+            [
+              -73.9778915,
+              40.7625154
+            ],
+            [
+              -73.9778769,
+              40.7625353
+            ],
+            [
+              -73.9778088,
+              40.7625066
+            ],
+            [
+              -73.9778519,
+              40.7624475
+            ],
+            [
+              -73.9779736,
+              40.7622807
+            ],
+            [
+              -73.977823,
+              40.7622173
+            ],
+            [
+              -73.9777884,
+              40.7622647
+            ],
+            [
+              -73.9776746,
+              40.7624207
+            ],
+            [
+              -73.9775079,
+              40.7623504
+            ],
+            [
+              -73.9774255,
+              40.7624634
+            ],
+            [
+              -73.9773642,
+              40.7625474
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pops_number": "M050022",
+        "borough_name": "Manhattan",
+        "borocode": "1",
+        "community_district": "5",
+        "address_number": "1350",
+        "street_name": "SIXTH AVENUE",
+        "zip_code": "10019",
+        "building_address_with_zip": "1350 SIXTH AVENUE, New York, NY 10019",
+        "tax_block": "1270",
+        "tax_lot": "71",
+        "building_name": "Men's Apparel",
+        "building_location": "Southeast corner of West 55th Street and Sixth Avenue",
+        "year_completed": "1966",
+        "building_constructed": "Completed",
+        "public_space_type": "Plaza",
+        "developer": "Samuel Minskoff &amp; Sons",
+        "building_architect": "Emery Roth &amp; Sons",
+        "principal_public_space": "Emery Roth &amp; Sons",
+        "size_required": "Plaza 5879.50 sf",
+        "hour_of_access_required": "24 Hours",
+        "amenities_required": "None",
+        "other_required": "",
+        "permitted_amenities": "",
+        "physically_disabled": "Full/Partial",
+        "xcoordinate": "990406",
+        "ycoordinate": "217104",
+        "council_district": "4",
+        "census_tract": "104",
+        "bin": "1034815",
+        "bbl": "1012700071",
+        "nta": "",
+        "geocoded_column": "POINT (-73.977778 40.762575)"
+      }
+    }
+  ]
+}</pre>

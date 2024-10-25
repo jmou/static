@@ -1,0 +1,8 @@
+<h2>Inputs</h2>
+<h3>Identity</h3>
+<h3>index.html</h3><div hx-get="details/74ce6d51d2f3f934ded0f34207219969cc30c3e687e390c19bbb5b27e3f50233" hx-trigger=load></div>
+<h3>pops.geojson</h3><div hx-get="details/8b4d9898d9549374607ca4f0ebf16de184dd3aecac0e9bf9ed172127490a4628" hx-trigger=load></div>
+<h3>pops/M010023/details.html</h3><div hx-get="details/789c0490db13ed4cbd8f46491c1af1aa532fcaadf659027624ef3fa578125ea9" hx-trigger=load></div>
+<h3>pops/M010023/site-plan.png</h3><div hx-get="details/b19235140d484f353d8b2598f16744ec7b0b458f4ab0bf1a2a1186fa577cac27" hx-trigger=load></div>
+<h3>pops/M050022/details.html</h3><div hx-get="details/f60ac14f498e395a187158945a38a76c3652b43ddf3228a2b2182054bd0ccfcf" hx-trigger=load></div>
+<h3>pops/M050022/site-plan.png</h3><div hx-get="details/4242374e9f0867e0cddb4bba499911820d935ed61f2acdbfefc30d25fc558f93" hx-trigger=load></div>

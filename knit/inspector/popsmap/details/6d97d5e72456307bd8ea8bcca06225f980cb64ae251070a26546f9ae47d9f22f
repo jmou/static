@@ -1,0 +1,6 @@
+<h2>Inputs</h2>
+<h3>$param</h3><div hx-get="details/e3ac693d53a8fa42b3de645b2345d3ffc7ecfda36f29d8bd1fd1f1969d66b2e4" hx-trigger=load></div>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>parts/M010023</h3><div hx-get="details/dda571d1e8b365a5b530316de7debe426dfc1c68dd33451317a62011e5d22223" hx-trigger=load></div>
+<h3>parts/M050022</h3><div hx-get="details/ee6d550420e68602dbd86f48f2cd80417e473624fc798e4217b3896ddcb01596" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/4f83bbd3e9a2f516c0797b488b33b29e99695a9bb1e6b5242d8933bff9e889ab" hx-trigger=load></div>

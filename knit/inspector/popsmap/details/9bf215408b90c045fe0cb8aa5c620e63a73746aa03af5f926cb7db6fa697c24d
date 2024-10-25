@@ -1,0 +1,1 @@
+<pre>curl -fsSL "$url" &gt; out/data</pre>

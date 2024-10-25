@@ -1,0 +1,34 @@
+<pre>step params: params
+    env = !
+
+partial bash: cmd "/usr/bin/bash\0-e\0in/script"
+    script = !
+
+partial curl: partial bash
+    $url = !
+    script = "curl -fsSL \"$url\" &gt; out/data"
+
+step apops-url: partial bash
+    env = params:env
+    script = ". in/env &amp;&amp; echo -n \"https://apops.mas.org/pops/${pops_number,,}/\" &gt; out/url"
+
+step scrape: partial curl
+    $url = apops-url:url
+
+step plan-conditional: partial bash
+    scrape/ := scrape:
+    plan.knit = ./process-scrape.knit
+    script = ./plan-conditional.sh
+
+step process-scrape: flow plan-conditional:
+
+step details: partial bash
+    env = params:env
+    profile.txt = process-scrape:profile.txt
+    $num_submissions = process-scrape:num-submissions
+    script = ./format-details.sh
+
+step combine: identity
+    site-plan.png = process-scrape:site-plan.png
+    details.html = details:html
+</pre>

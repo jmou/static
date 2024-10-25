@@ -1,0 +1,1 @@
+<pre>python in/raw.skip/csv_to_geojson.py in/raw.skip/pops.csv out/data load/footprints.geojson</pre>

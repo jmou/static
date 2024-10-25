@@ -1,0 +1,5 @@
+<div hx-get="details/0e97275de96564e3376752470681601a10cb2d1094f34441637936dacb89a3ef" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>Log</h3><div hx-get="details/c06d4f3e7deeb565f02f5dbf2ae5c8767c86cfdfdeb5ecfc988d74bc9e3e3950" hx-trigger=load></div>
+<h3>M010023</h3><div hx-get="details/dda571d1e8b365a5b530316de7debe426dfc1c68dd33451317a62011e5d22223" hx-trigger=load></div>
+<h3>M050022</h3><div hx-get="details/ee6d550420e68602dbd86f48f2cd80417e473624fc798e4217b3896ddcb01596" hx-trigger=load></div>

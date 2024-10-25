@@ -1,0 +1,1 @@
+<pre>mkdir save.fs &amp;&amp; curl -fsSL "$url" &gt; save.fs/data</pre>

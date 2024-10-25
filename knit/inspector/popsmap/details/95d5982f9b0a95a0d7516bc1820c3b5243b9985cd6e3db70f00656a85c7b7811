@@ -1,0 +1,4 @@
+<h2>Inputs</h2>
+<h3>$url</h3><div hx-get="details/707eed0f29a0571c0cb419dddd5e13c293289ae0dcdf562bc230bc409546e067" hx-trigger=load></div>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>script</h3><div hx-get="details/9bf215408b90c045fe0cb8aa5c620e63a73746aa03af5f926cb7db6fa697c24d" hx-trigger=load></div>

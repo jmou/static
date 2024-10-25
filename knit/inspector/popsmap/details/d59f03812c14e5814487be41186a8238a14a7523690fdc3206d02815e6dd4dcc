@@ -1,0 +1,3 @@
+<div hx-get="details/2d55fda9fd744246def4e335b049a98933ad400f68a6b8bc51aaa2346fc156bb" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>data</h3><div hx-get="details/3991752577531e1b93b98b4e7b70523c090b9cbd9533caaeff1272c58ec4012c" hx-trigger=load></div>

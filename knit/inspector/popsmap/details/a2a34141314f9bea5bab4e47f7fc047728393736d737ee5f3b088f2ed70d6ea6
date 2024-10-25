@@ -1,0 +1,6 @@
+<h2>Inputs</h2>
+<h3>$url</h3><div hx-get="details/597d3961c3e39116c8f9550d1747c04186f37e4331c8acdf50bd7e8196f7ac9f" hx-trigger=load></div>
+<h3>Command</h3><pre>cmd /bin/bash -e in/_.skip/filter.sh</pre>
+<h3>_.skip/filter.sh</h3><div hx-get="details/6d2c096656251aa7eb34b3f15b24ed76b64e31b62a0f886c5041165510c3dcdc" hx-trigger=load></div>
+<h3>_.skip/filters/fs</h3><div hx-get="details/fb40ba6ab8d54810529ad23a66506ad6a7f9002b1beb9457d571e0d3633a23d9" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/f340c036fef70b1eb57fd23b6d35ca54b4470f899cb0efe0914face5d376495b" hx-trigger=load></div>

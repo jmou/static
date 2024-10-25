@@ -1,0 +1,50 @@
+<pre># TODO recursion? only on directories ending in .d?
+# TODO filter hidden files?
+# TODO filter composition
+
+shopt -s nullglob
+
+chmod +x in/_.skip/filters/*
+
+# usage: run_filter &lt;filter&gt; &lt;operation&gt; &lt;from&gt; &lt;to&gt;
+run_filter() {
+    if [[ $1 != skip ]]; then
+        if [[ -e $4 ]]; then
+            echo "file already exists: $4" &gt;&amp;2
+            exit 1
+        fi
+        mkdir -p "$(dirname "$4")"
+        "./in/_.skip/filters/$1" "$2" "$3" "$4"
+    fi
+}
+
+# in/*.&lt;filter&gt; -&gt; load/*
+load_all() {
+    local filter from to
+    for from in in/*; do
+        filter="${from##*.}"
+        if [[ $filter == $from ]]; then # no extension
+            continue
+        fi
+        to="${from#in/}"
+        to="load/${to%.*}"
+        run_filter "$filter" load "$from" "$to"
+    done
+}
+
+# save.&lt;filter&gt;/* -&gt; out/*.&lt;filter&gt;
+save_all() {
+    local filter from i to
+    for i in save.*; do
+        filter="${i#save.}"
+        for from in "$i"/*; do
+            to="out/${from#$i/}.$filter"
+            run_filter "$filter" save "$from" "$to"
+        done
+    done
+}
+
+load_all
+bash -e in/script
+save_all
+</pre>

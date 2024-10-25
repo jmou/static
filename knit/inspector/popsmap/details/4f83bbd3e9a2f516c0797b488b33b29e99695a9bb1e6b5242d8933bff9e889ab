@@ -1,0 +1,23 @@
+<pre>cp -R in/parts out/
+
+exec &gt; out/plan.knit
+
+cat &lt;&lt;\EOF
+step params: params
+    context/ = !
+
+EOF
+
+for filename in in/parts/*; do
+    filename="${filename#in/parts/}"
+    echo "step part-$filename: flow params:context/"
+    echo "    $param = ./parts/$filename"
+    echo
+done
+
+echo step combine: identity
+for filename in in/parts/*; do
+    filename="${filename#in/parts/}"
+    echo "    $filename/ = part-$filename:"
+done
+</pre>

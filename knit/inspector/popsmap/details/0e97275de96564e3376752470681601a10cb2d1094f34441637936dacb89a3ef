@@ -1,0 +1,5 @@
+<h2>Inputs</h2>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>pops.csv</h3><div hx-get="details/3991752577531e1b93b98b4e7b70523c090b9cbd9533caaeff1272c58ec4012c" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/a9f2d7460d89668463ff6f6ad6ccdc0afbc4d50fa7c53290e2e0c248d528b463" hx-trigger=load></div>
+<h3>transpose.py</h3><div hx-get="details/2547ba5941121e221acfcc7e1b64d0f6d06030cc282e38cd421675337eef84a7" hx-trigger=load></div>

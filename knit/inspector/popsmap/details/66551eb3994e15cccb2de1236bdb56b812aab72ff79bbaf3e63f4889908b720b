@@ -1,0 +1,21 @@
+<pre># TODO can this be generalized?
+
+# TODO better way to check for success
+if [[ -s in/scrape/data ]]; then
+    # TODO this is a confusing way to pass params
+    cp in/plan.knit out/subflow.knit
+    cp -R in/scrape out/
+    cat &gt; out/plan.knit &lt;&lt;\EOF
+step success: flow ./subflow.knit
+    scrape/ = ./scrape/
+EOF
+else
+    # TODO proper stubbing
+    cat &gt; out/plan.knit &lt;&lt;\EOF
+step error: identity
+    profile.txt = ""
+    num-submissions = "nonexistent"
+    site-plan.png = ""
+EOF
+fi
+</pre>

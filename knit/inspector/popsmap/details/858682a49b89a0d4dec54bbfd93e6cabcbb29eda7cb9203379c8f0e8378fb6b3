@@ -1,0 +1,9 @@
+<h2>Inputs</h2>
+<h3>.knit/files/parts/M010023</h3><div hx-get="details/dda571d1e8b365a5b530316de7debe426dfc1c68dd33451317a62011e5d22223" hx-trigger=load></div>
+<h3>.knit/files/parts/M050022</h3><div hx-get="details/ee6d550420e68602dbd86f48f2cd80417e473624fc798e4217b3896ddcb01596" hx-trigger=load></div>
+<h3>.knit/files/plan.knit</h3><div hx-get="details/d0d3b0f37384b9f0587ea9405d26b8c6a1d32683061f3f854104cf7cfa0caab1" hx-trigger=load></div>
+<h3>.knit/flow</h3><div hx-get="details/d0d3b0f37384b9f0587ea9405d26b8c6a1d32683061f3f854104cf7cfa0caab1" hx-trigger=load></div>
+<h3>context/format-details.sh</h3><div hx-get="details/610f82c70b92800cd7e5adcdc8edc3cfe8809d64a7474488ce1bdbe8f8aae7fd" hx-trigger=load></div>
+<h3>context/plan-conditional.sh</h3><div hx-get="details/66551eb3994e15cccb2de1236bdb56b812aab72ff79bbaf3e63f4889908b720b" hx-trigger=load></div>
+<h3>context/plan.knit</h3><div hx-get="details/a423a01871d16a09848ada0981bca9bd49a2ea532f7a9efa2cac947afd3eeace" hx-trigger=load></div>
+<h3>context/process-scrape.knit</h3><div hx-get="details/e654a7cd9778ad5af43260ed005fc01fce1bc82feacba11b40866e1b95385a56" hx-trigger=load></div>

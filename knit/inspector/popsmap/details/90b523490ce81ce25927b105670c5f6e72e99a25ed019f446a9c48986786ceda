@@ -1,0 +1,5 @@
+<div hx-get="details/6d97d5e72456307bd8ea8bcca06225f980cb64ae251070a26546f9ae47d9f22f" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>parts/M010023</h3><div hx-get="details/dda571d1e8b365a5b530316de7debe426dfc1c68dd33451317a62011e5d22223" hx-trigger=load></div>
+<h3>parts/M050022</h3><div hx-get="details/ee6d550420e68602dbd86f48f2cd80417e473624fc798e4217b3896ddcb01596" hx-trigger=load></div>
+<h3>plan.knit</h3><div hx-get="details/d0d3b0f37384b9f0587ea9405d26b8c6a1d32683061f3f854104cf7cfa0caab1" hx-trigger=load></div>

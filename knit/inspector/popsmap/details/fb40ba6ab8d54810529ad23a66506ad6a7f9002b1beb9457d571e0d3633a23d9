@@ -1,0 +1,32 @@
+<pre>#!/bin/bash -e
+
+# TODO missing files / garbage collection
+FILTER_FS_DIR="${FILTER_FS_DIR-/var/tmp/knit-fs}"
+
+[[ $# -eq 3 ]]
+op="$1"
+from="$2"
+to="$3"
+
+if [[ $op == load ]]; then
+  if [[ $(wc -c "$from" | cut -d' ' -f1) -ne 64 ]]; then
+    echo "invalid SHA-256 size for $from" &gt;&amp;2
+    exit 1
+  fi
+  sha="$(&lt; "$from")"
+  # TODO symlink?
+  cp "$FILTER_FS_DIR/$sha" "$to"
+elif [[ $op == save ]]; then
+  mkdir -p "$FILTER_FS_DIR"
+  sha=$(sha256sum "$from" | cut -d' ' -f1)
+  if [[ ! -e "$FILTER_FS_DIR/$sha" ]]; then
+      # TODO maybe attempt hardlink first
+      cp "$from" "$FILTER_FS_DIR/$sha"
+      chmod -wx "$FILTER_FS_DIR/$sha"
+  fi
+  echo -n "$sha" &gt; "$to"
+else
+  echo "unsupported operation $op" &gt;&amp;2
+  exit 1
+fi
+</pre>

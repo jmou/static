@@ -1,0 +1,3 @@
+<div hx-get="details/64c72984eb1505c98bd022ce41106c0d28c7c52738f468aaa649f2dc9a8f9e95" hx-trigger=load></div>
+<h2>Outputs</h2>
+<h3>footprints.geojson.fs</h3><div hx-get="details/672aae967ae6d947fc31527ba12f508607d665ea8993982c6a3cda22557f0a43" hx-trigger=load></div>

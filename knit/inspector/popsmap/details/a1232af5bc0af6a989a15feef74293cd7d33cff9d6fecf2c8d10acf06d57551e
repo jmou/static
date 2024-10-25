@@ -1,0 +1,4 @@
+<h2>Inputs</h2>
+<h3>Command</h3><pre>cmd /bin/bash -e in/script</pre>
+<h3>pops.csv</h3><div hx-get="details/3991752577531e1b93b98b4e7b70523c090b9cbd9533caaeff1272c58ec4012c" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/1d791310abb2052d7e9ff1d59e209933f13641daec2d092c3769b9f522e75923" hx-trigger=load></div>

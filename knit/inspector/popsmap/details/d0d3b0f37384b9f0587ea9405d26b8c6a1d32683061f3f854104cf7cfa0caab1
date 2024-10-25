@@ -1,0 +1,13 @@
+<pre>step params: params
+    context/ = !
+
+step part-M010023: flow params:context/
+    env = ./parts/M010023
+
+step part-M050022: flow params:context/
+    env = ./parts/M050022
+
+step combine: identity
+    M010023/ = part-M010023:
+    M050022/ = part-M050022:
+</pre>

@@ -1,0 +1,8 @@
+<h2>Inputs</h2>
+<h3>Command</h3><pre>cmd /bin/bash -e in/_.skip/filter.sh</pre>
+<h3>_.skip/filter.sh</h3><div hx-get="details/6d2c096656251aa7eb34b3f15b24ed76b64e31b62a0f886c5041165510c3dcdc" hx-trigger=load></div>
+<h3>_.skip/filters/fs</h3><div hx-get="details/fb40ba6ab8d54810529ad23a66506ad6a7f9002b1beb9457d571e0d3633a23d9" hx-trigger=load></div>
+<h3>footprints.geojson.fs</h3><div hx-get="details/672aae967ae6d947fc31527ba12f508607d665ea8993982c6a3cda22557f0a43" hx-trigger=load></div>
+<h3>raw.skip/csv_to_geojson.py</h3><div hx-get="details/58a74b4d99193838d3a2815f164c0072ec922e18447ace53b7fcb9c66a0866ce" hx-trigger=load></div>
+<h3>raw.skip/pops.csv</h3><div hx-get="details/3991752577531e1b93b98b4e7b70523c090b9cbd9533caaeff1272c58ec4012c" hx-trigger=load></div>
+<h3>script</h3><div hx-get="details/3c152bb9b56731c7fa572852a1309d8491fd3124cf38fd54869634d15b8eb16f" hx-trigger=load></div>

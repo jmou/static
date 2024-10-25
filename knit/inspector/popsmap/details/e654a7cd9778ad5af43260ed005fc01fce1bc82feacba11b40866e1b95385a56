@@ -1,0 +1,35 @@
+<pre>step params: params
+    scrape/ = !
+
+partial bash: cmd "/usr/bin/bash\0-e\0in/script"
+    script = !
+
+# TODO some way to express this with identity
+step scrape: partial bash
+    scrape/ = params:scrape/
+    script = "cp -R in/scrape/. out/"
+
+partial curl: partial bash
+    $url = !
+    script = "curl -fsSL \"$url\" &gt; out/data"
+
+step extract-site-plan-url: partial bash
+    data = scrape:data
+    script = "&lt; in/data sed -n '1,/&lt;figure class=\"site-plan\"&gt;/d;/img/{p;q}' | cut -d'\"' -f2 | tr -d \\\\n &gt; out/url"
+
+step site-plan.png: partial curl
+    $url = extract-site-plan-url:url
+
+step extract-num-submissions: partial bash
+    data = scrape:data
+    script = "grep 'class=\"comment \"' in/data | wc -l | tr -d \\\\n &gt; out/count"
+
+step profile: partial bash
+    data = scrape:data
+    script = "&lt; in/data sed -n '1,/class=\"profile-entry\"/d;/&lt;!-- \\.entry-content --&gt;/q;s/&lt;p&gt;/\\\\n/g;p' | tr \\\\n ' ' | sed 's/&lt;[^&gt;]*&gt;//g;s/\\s\\+/ /g;s/\\\\n/\\n/g;s/&amp;amp;/\\&amp;/g' &gt; out/text"
+
+step combine: identity
+    site-plan.png = site-plan.png:data
+    num-submissions = extract-num-submissions:count
+    profile.txt = profile:text
+</pre>

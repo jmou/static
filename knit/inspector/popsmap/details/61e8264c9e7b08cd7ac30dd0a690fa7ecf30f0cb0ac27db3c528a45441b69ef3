@@ -1,0 +1,1 @@
+<pre>mkdir save.fs &amp;&amp; nix shell nixpkgs#gdalMinimal -c ogr2ogr -f GeoJSON save.fs/footprints.geojson load/building.shz -lco RFC7946=YES -where @in/where</pre>
