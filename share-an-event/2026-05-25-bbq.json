@@ -1,0 +1,58 @@
+{
+  "name": "Share an event - Memorial Day BBQ",
+  "events": [{
+    "title": "Ft Greene BBQ",
+    "startAt": "20260525",
+    "endAt": "20260526",
+    "url": "https://partiful.com/e/0hhZrPTtHQ8VaSDvnSwH",
+    "imageUrl": "https://purposefulserendipity.com/assets/2026/Porkbutt%20Grill%20Mary-nade.png"
+  },{
+    "title": "Piscator (branzino pop-up)",
+    "startAt": "20260528",
+    "endAt": "20260529",
+    "url": "https://piscator.nyc/",
+    "imageUrl": "https://piscator.nyc/cdn/shop/files/renata.jpg?crop=region&crop_height=750&crop_left=0&crop_top=125&crop_width=750&v=1762994320&width=600"
+  },{
+    "title": "Skate park dance party",
+    "startAt": "20260612",
+    "endAt": "20260613",
+    "url": "https://partiful.com/e/boDVBXkYnuKOo6JEahHX",
+    "imageUrl": "https://partiful.imgix.net/external/user/yU5S44Aq1laXfGVrDmvulOJc3823/Zt_hlX4shwX78uRfxBzfb?fit=clip&w=400&auto=format"
+  },{
+    "title": "Puerto Rican Day Parade in Bushwick",
+    "startAt": "20260614T1500-0400",
+    "endAt": "20260614T1800-0400",
+    "url": "https://www.instagram.com/knickerbockerpuertoricanparade/"
+  },{
+    "title": "DJ Nabila @ William Vale Rooftop",
+    "startAt": "20260618T1700-0400",
+    "endAt": "20260618T2100-0400",
+    "url": "https://www.instagram.com/nabilav/"
+  },{
+    "title": "PSA! Get a bidet :)",
+    "startAt": "20260527",
+    "endAt": "20260528"
+  },{
+    "title": "Love wins",
+    "startAt": "20260628",
+    "endAt": "20260629"
+  },{
+    "title": "Member's picnic night @ Bk Botanic Garden",
+    "startAt": "20260610",
+    "endAt": "20260611",
+    "url": "https://www.bbg.org/visit/event/members_rose_night",
+    "imageUrl": "https://img.bbg.org/medium800/52151612264.jpg"
+  },{
+    "title": "Comedy Bang! Bang! live show @ The Town Hall",
+    "startAt": "20260624",
+    "endAt": "20260625",
+    "url": "https://www.thetownhall.org/event/comedy-bang-bang-ground-beefing-tour-2026",
+    "imageUrl": "https://www.thetownhall.org/_next/image?url=https%3A%2F%2Ftownhall-assets.nyc3.digitaloceanspaces.com%2Fwp-content%2Fuploads%2F2026%2F06%2FStatic_Outdoor_1920x1080_ComedyBangBang_2026_Regional_TheTownHall_0624.jpg&w=1920&q=75"
+  },{
+    "title": "Anjunadeep Open Air @ SummerStage Central Park",
+    "startAt": "20260718",
+    "endAt": "20260719",
+    "url": "https://cityparksfoundation.org/events/anjunadeep/",
+    "imageUrl": "https://cityparksfoundation.org/wp-content/uploads/2026/04/Copy-of-OA-NYC-Lineup-16x9-1-1024x576.webp"
+  }]
+}
