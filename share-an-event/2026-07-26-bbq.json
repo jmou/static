@@ -1,0 +1,40 @@
+{
+  "name": "Share an event - July 26 BBQ",
+  "events": [{
+    "title": "Devil Grills Carne Asada",
+    "startAt": "20260726",
+    "endAt": "20260727",
+    "url": "https://partiful.com/e/yxdgW9hqKgriQPCSWYae",
+    "imageUrl": "https://purposefulserendipity.com/assets/2026/Devil%20Grills%20Carne%20Asada.png"
+  },{
+    "title": "Shelf Life grocery store funhouse",
+    "startAt": "20260730T2130-0400",
+    "endAt": "20260730T2300-0400",
+    "url": "https://events.humanitix.com/shelf-life",
+    "imageUrl": "https://images.humanitix.com/i/9de56bef-6915-4bd6-bef3-a54807b8bfe7.png@responsive-1250.webp"
+  },{
+    "title": "Public Service dance party @ Classon Playground",
+    "startAt": "20260809",
+    "endAt": "20260810",
+    "url": "https://www.instagram.com/p/DW1lRznEXww/?img_index=1",
+    "imageUrl": "https://media.timeout.com/images/106317297/image.webp"
+  },{
+    "title": "Disco Express sunset cruise feat Sarindipity",
+    "startAt": "20260822T1700-0400",
+    "endAt": "20260822T2100-0400",
+    "url": "https://ra.co/events/2491796",
+    "imageUrl": "https://imgproxy.ra.co/_/quality:66/w:1028/rt:fill/aHR0cHM6Ly9pbWFnZXMucmEuY28vMDE3NTJiNjZiMzY1MDNjNmM4YmNkZDNkZGRlM2VlYmJkNDk2ZGFjNy5wbmc="
+  },{
+    "title": "The Hitman & the Bum (Indie Film Premiere)",
+    "startAt": "20260815T1400-0400",
+    "endAt": "20260815T1600-0400",
+    "url": "https://partiful.com/e/HbEjUeVA4xNHkInWytC2",
+    "imageUrl": "https://partiful.imgix.net/external/user/kS6tCzZT1ZWHn5cXOxQkKQ03R992/3jigUKKw_882glwjbxcid?fit=clip&w=400&auto=format"
+  },{
+    "title": "Movie Night @ Brooklyn Botanic Garden",
+    "startAt": "20260819T1800-0400",
+    "endAt": "20260819T2030-0400",
+    "url": "https://www.bbg.org/visit/event/members_movie_night",
+    "imageUrl": "https://www.bbg.org/img/uploads/hero/_desktop_hero_regular/movie-night_MS_52309584527.jpg"
+  }]
+}
