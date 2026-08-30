@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>poortext</title>
+    <style>
+      :root {
+        --bg: #fff;
+        --fg: #1a1a1a;
+        --muted: #6b6b6b;
+        --line: #d8d8d8;
+        --accent: #2d5bd7;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #16181a;
+          --fg: #e8e8e8;
+          --muted: #9aa0a6;
+          --line: #3a3f44;
+          --accent: #7aa2f7;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0 auto;
+        padding: 1.5rem 1rem 4rem;
+        max-width: 46rem;
+        background: var(--bg);
+        color: var(--fg);
+        font: 16px/1.5 Helvetica, Arial, sans-serif;
+      }
+      h1 { font-size: 1.3rem; margin: 0 0 .25rem; }
+      .sub { color: var(--muted); margin: 0 0 1.25rem; font-size: .9rem; }
+
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .35rem;
+        align-items: center;
+        margin: .5rem 0;
+      }
+      button, select {
+        font: inherit;
+        font-size: .85rem;
+        color: var(--fg);
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        padding: .3rem .6rem;
+        cursor: pointer;
+      }
+      button:hover, select:hover { border-color: var(--accent); }
+      button:active { background: var(--line); }
+      .bar .gap { flex: 1; }
+      .bar label { font-size: .8rem; color: var(--muted); }
+      #status { font-size: .8rem; color: var(--accent); min-height: 1.2em; }
+
+      #editor {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 1rem 1.25rem;
+        min-height: 24rem;
+        overflow-wrap: break-word;
+      }
+      #editor:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+      #editor:empty::before { content: attr(data-placeholder); color: var(--muted); }
+      #editor > :first-child { margin-top: 0; }
+      #editor > :last-child { margin-bottom: 0; }
+      #editor h1 { font-size: 1.5rem; }
+      #editor h2 { font-size: 1.25rem; }
+      #editor h3 { font-size: 1.1rem; }
+      #editor h4, #editor h5, #editor h6 { font-size: 1rem; }
+      #editor blockquote {
+        margin: 1em 0 1em 1em;
+        padding-left: .8em;
+        border-left: 3px solid var(--line);
+        color: var(--muted);
+      }
+      #editor pre {
+        white-space: pre-wrap;
+        background: rgba(127, 127, 127, .12);
+        padding: .6em .8em;
+        border-radius: 4px;
+      }
+      #editor code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9em; }
+      #editor a { color: var(--accent); }
+      #editor table { border-collapse: collapse; }
+      #editor td, #editor th { border: 1px solid var(--line); padding: .25em .5em; }
+      #editor ul, #editor ol { padding-left: 1.5em; }
+
+      details { margin-top: 1rem; font-size: .85rem; color: var(--muted); }
+      details pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: .75rem;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: .8rem;
+      }
+    </style>
+  </head>
+  <body>
+
+<h1>poortext</h1>
+<p class=sub>Paste from Obsidian (or anywhere). Everything but basic formatting is thrown
+away, so what you copy back out is clean enough to e-mail.</p>
+
+<div class=bar>
+  <button data-cmd=bold title="Bold (Ctrl/Cmd+B)"><b>B</b></button>
+  <button data-cmd=italic title="Italic (Ctrl/Cmd+I)"><i>I</i></button>
+  <button data-cmd=insertUnorderedList title="Bulleted list">&bull; List</button>
+  <button data-cmd=insertOrderedList title="Numbered list">1. List</button>
+  <button data-cmd=removeFormat title="Strip formatting from the selection">Unformat</button>
+  <span class=gap></span>
+  <label>Paste as
+    <select id=mode>
+      <option value=auto>auto</option>
+      <option value=markdown>Markdown</option>
+      <option value=html>HTML</option>
+    </select>
+  </label>
+</div>
+
+<div id=editor contenteditable=true spellcheck=true data-placeholder="Paste here..."></div>
+
+<div class=bar>
+  <button id=copy>Copy rich text</button>
+  <button id=clean>Re-clean all</button>
+  <button id=erase>Erase</button>
+  <span class=gap></span>
+  <span id=status role=status></span>
+</div>
+
+<details>
+  <summary>HTML source</summary>
+  <pre id=src></pre>
+</details>
+
+<script>
+(() => {
+  'use strict';
+
+  const editor = document.getElementById('editor');
+  const status = document.getElementById('status');
+  const src = document.getElementById('src');
+  const mode = document.getElementById('mode');
+
+  /* ---------- sanitizer ---------- */
+
+  // Anything not listed here is unwrapped: the children survive, the tag does not.
+  const TAGS = {
+    A: 'A', B: 'STRONG', STRONG: 'STRONG', I: 'EM', EM: 'EM', U: 'U',
+    S: 'DEL', STRIKE: 'DEL', DEL: 'DEL', SUP: 'SUP', SUB: 'SUB',
+    CODE: 'CODE', PRE: 'PRE', BR: 'BR', HR: 'HR',
+    P: 'P', DIV: 'P', SECTION: 'P', ARTICLE: 'P',
+    H1: 'H1', H2: 'H2', H3: 'H3', H4: 'H4', H5: 'H5', H6: 'H6',
+    UL: 'UL', OL: 'OL', LI: 'LI', BLOCKQUOTE: 'BLOCKQUOTE',
+    TABLE: 'TABLE', THEAD: 'THEAD', TBODY: 'TBODY', TFOOT: 'TFOOT',
+    TR: 'TR', TD: 'TD', TH: 'TH',
+  };
+  // Dropped along with their contents.
+  const NUKE = new Set(['SCRIPT', 'STYLE', 'HEAD', 'TITLE', 'META', 'LINK', 'IMG',
+    'PICTURE', 'SOURCE', 'SVG', 'CANVAS', 'IFRAME', 'OBJECT', 'EMBED', 'VIDEO',
+    'AUDIO', 'FORM', 'INPUT', 'BUTTON', 'SELECT', 'TEXTAREA', 'NOSCRIPT', 'TEMPLATE']);
+  const BLOCKS = new Set(['P', 'DIV', 'SECTION', 'ARTICLE', 'UL', 'OL', 'LI', 'TABLE',
+    'BLOCKQUOTE', 'PRE', 'HR', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']);
+  // Empty ones are noise. Empty table cells are not.
+  const DROP_IF_EMPTY = new Set(['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'A', 'STRONG',
+    'EM', 'U', 'DEL', 'SUP', 'SUB', 'CODE', 'PRE', 'BLOCKQUOTE', 'LI', 'UL', 'OL']);
+
+  const safeUrl = (url) => {
+    if (!url) return null;
+    try {
+      const u = new URL(url, location.href);
+      return /^(https?|mailto|tel):$/.test(u.protocol) ? u.href : null;
+    } catch { return null; }
+  };
+
+  const hasBlockChild = (el) =>
+    [...el.children].some((c) => BLOCKS.has(c.tagName) || hasBlockChild(c));
+
+  function copyInto(node, out) {
+    for (const child of node.childNodes) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        out.appendChild(document.createTextNode(child.data));
+        continue;
+      }
+      if (child.nodeType !== Node.ELEMENT_NODE) continue;
+      if (NUKE.has(child.tagName)) continue;
+
+      let tag = TAGS[child.tagName];
+      // A div wrapping other blocks is layout, not a paragraph.
+      if (tag === 'P' && hasBlockChild(child)) tag = null;
+      if (!tag) { copyInto(child, out); continue; }
+
+      const el = document.createElement(tag);
+      if (tag === 'A') {
+        const href = safeUrl(child.getAttribute('href'));
+        if (!href) { copyInto(child, out); continue; }
+        el.setAttribute('href', href);
+      }
+      copyInto(child, el);
+      if (DROP_IF_EMPTY.has(tag) && !el.textContent.trim() && !el.querySelector('br, hr')) continue;
+      out.appendChild(el);
+    }
+  }
+
+  // Whitelisted tags and attributes only, as a fragment ready to insert.
+  function sanitize(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const frag = document.createDocumentFragment();
+    copyInto(doc.body, frag);
+    return frag;
+  }
+
+  /* ---------- markdown ---------- */
+
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // Code spans are pulled out before the other inline rules run, so backticked
+  // text is never reinterpreted as emphasis or a link.
+  const HOLE = '\u0000';
+  const HOLES = new RegExp(HOLE + '(\\d+)' + HOLE, 'g');
+
+  function inline(s) {
+    const codes = [];
+    s = s.replace(/`([^`]+)`/g, (m, c) => HOLE + (codes.push(c) - 1) + HOLE);
+    s = esc(s);
+    s = s.replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1');            // image -> alt text
+    s = s.replace(/!?\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2');     // [[wikilink|alias]]
+    s = s.replace(/!?\[\[([^\]]+)\]\]/g, '$1');                // [[wikilink]]
+    s = s.replace(/\[([^\]]*)\]\(\s*([^)\s]+)[^)]*\)/g, (m, text, url) => {
+      const href = safeUrl(url);
+      return href ? '<a href="' + href.replace(/"/g, '&quot;') + '">' + (text || href) + '</a>' : text;
+    });
+    s = s.replace(/(^|[\s(])(https?:\/\/[^\s<>()]+)/g, '$1<a href="$2">$2</a>');
+    s = s.replace(/\*\*\*(\S(?:[^*]*\S)?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    s = s.replace(/\*\*(\S(?:[^*]*\S)?)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/(^|\W)__(\S(?:[^_]*\S)?)__/g, '$1<strong>$2</strong>');
+    s = s.replace(/\*(\S(?:[^*]*\S)?)\*/g, '<em>$1</em>');
+    s = s.replace(/(^|\W)_(\S(?:[^_]*\S)?)_(?=\W|$)/g, '$1<em>$2</em>');
+    s = s.replace(/~~(\S(?:[^~]*\S)?)~~/g, '<del>$1</del>');
+    s = s.replace(/==(\S(?:[^=]*\S)?)==/g, '$1');              // highlight -> plain
+    s = s.replace(/\s\^[A-Za-z0-9-]+$/, '');                   // trailing ^block-id
+    return s.replace(HOLES, (m, i) => '<code>' + esc(codes[i]) + '</code>');
+  }
+
+  const RE_ITEM = /^(\s*)(?:[-*+]|\d+[.)])\s+(.*)$/;
+
+  function markdownToHtml(text) {
+    const lines = text.replace(/\r\n?/g, '\n').split('\n');
+    const stack = [];   // open lists, outermost first
+    let out = '';
+    let para = [];
+
+    const closeLists = (indent = -1) => {
+      while (stack.length && stack[stack.length - 1].indent > indent) {
+        out += '</li></' + stack.pop().tag + '>';
+      }
+    };
+    // Obsidian's default is loose line breaks, so a wrapped paragraph keeps its lines.
+    const flushPara = () => {
+      if (para.length) out += '<p>' + para.map(inline).join('<br>') + '</p>';
+      para = [];
+    };
+    const endBlock = () => { flushPara(); closeLists(); };
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      if (/^\s*```/.test(line)) {                              // fenced code
+        endBlock();
+        const body = [];
+        while (++i < lines.length && !/^\s*```/.test(lines[i])) body.push(lines[i]);
+        out += '<pre><code>' + esc(body.join('\n')) + '</code></pre>';
+        continue;
+      }
+
+      if (!line.trim()) {
+        flushPara();
+        // A blank line inside a list is spacing, as long as the list continues.
+        if (!RE_ITEM.test(lines[i + 1] || '')) closeLists();
+        continue;
+      }
+
+      const heading = /^(#{1,6})\s+(.*)$/.exec(line);
+      if (heading) {
+        endBlock();
+        const n = heading[1].length;
+        out += '<h' + n + '>' + inline(heading[2].trim()) + '</h' + n + '>';
+        continue;
+      }
+
+      if (/^\s*(?:[-*_]\s*){3,}$/.test(line)) { endBlock(); out += '<hr>'; continue; }
+
+      if (/^\s*>/.test(line)) {                                // blockquote
+        endBlock();
+        const body = [];
+        while (i < lines.length && /^\s*>/.test(lines[i])) {
+          body.push(lines[i].replace(/^\s*>\s?/, ''));
+          i++;
+        }
+        i--;
+        out += '<blockquote>' + markdownToHtml(body.join('\n')) + '</blockquote>';
+        continue;
+      }
+
+      const item = RE_ITEM.exec(line);
+      if (item) {
+        flushPara();
+        const indent = item[1].replace(/\t/g, '    ').length;
+        const tag = /^\s*\d/.test(line) ? 'ol' : 'ul';
+        closeLists(indent);
+        const top = stack[stack.length - 1];
+        if (!top || indent > top.indent) {                     // deeper: nest inside the open li
+          out += '<' + tag + '>';
+          stack.push({ indent, tag });
+        } else {
+          out += '</li>';
+          if (top.tag !== tag) {                               // bullets became numbers, or back
+            out += '</' + stack.pop().tag + '><' + tag + '>';
+            stack.push({ indent, tag });
+          }
+        }
+        const task = /^\[([ xX])\]\s+(.*)$/.exec(item[2]);
+        out += '<li>' + (task
+          ? (task[1] === ' ' ? '☐ ' : '☑ ') + inline(task[2])
+          : inline(item[2]));
+        continue;
+      }
+
+      if (stack.length && /^\s/.test(line)) {                  // wrapped list item
+        out += '<br>' + inline(line.trim());
+        continue;
+      }
+
+      closeLists();
+      para.push(line.trim());
+    }
+    endBlock();
+    return out;
+  }
+
+  /* ---------- pasting ---------- */
+
+  const looksLikeMarkdown = (t) =>
+    /(^|\n)\s*(#{1,6}\s|[-*+]\s|\d+[.)]\s|>\s|```)/.test(t) ||
+    /\*\*.+\*\*|\[\[.+\]\]|\[.+\]\(.+\)|~~.+~~|==.+==/.test(t);
+
+  // Some apps advertise text/html that is really just wrapped plain text.
+  const richHtml = (h) =>
+    /<(p|h[1-6]|ul|ol|li|table|tr|blockquote|pre|strong|b|em|i|a|code|br|hr)\b/i.test(h);
+
+  function toFragment(dt) {
+    const html = dt.getData('text/html') || '';
+    const text = dt.getData('text/plain') || '';
+    const choice = mode.value;
+    // Obsidian's editing view offers Markdown only; its reading view offers HTML.
+    const useHtml = choice === 'html' ||
+      (choice === 'auto' && richHtml(html) && !(text && looksLikeMarkdown(text)));
+    if (useHtml) return sanitize(html);
+    return sanitize(markdownToHtml(text || html.replace(/<[^>]*>/g, '')));
+  }
+
+  function insert(frag) {
+    const sel = window.getSelection();
+    const last = frag.lastChild;
+    if (sel && sel.rangeCount && editor.contains(sel.anchorNode)) {
+      const range = sel.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(frag);
+      if (last) {
+        const after = document.createRange();
+        after.setStartAfter(last);
+        after.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(after);
+      }
+    } else {
+      editor.appendChild(frag);
+    }
+    editor.normalize();
+    render();
+  }
+
+  editor.addEventListener('paste', (e) => {
+    e.preventDefault();
+    insert(toFragment(e.clipboardData));
+    say('Pasted and cleaned.');
+  });
+
+  editor.addEventListener('drop', (e) => {
+    e.preventDefault();
+    insert(toFragment(e.dataTransfer));
+    say('Dropped and cleaned.');
+  });
+
+  /* ---------- chrome ---------- */
+
+  let timer;
+  function say(msg) {
+    status.textContent = msg;
+    clearTimeout(timer);
+    timer = setTimeout(() => { status.textContent = ''; }, 2500);
+  }
+
+  function render() {
+    src.textContent = editor.innerHTML;
+  }
+
+  document.querySelectorAll('[data-cmd]').forEach((btn) => {
+    btn.addEventListener('mousedown', (e) => e.preventDefault());   // keep the selection
+    btn.addEventListener('click', () => {
+      document.execCommand(btn.dataset.cmd);
+      editor.focus();
+      render();
+    });
+  });
+
+  document.getElementById('clean').addEventListener('click', () => {
+    editor.replaceChildren(sanitize(editor.innerHTML));
+    render();
+    say('Cleaned.');
+  });
+
+  document.getElementById('erase').addEventListener('click', () => {
+    editor.replaceChildren();
+    render();
+    editor.focus();
+  });
+
+  document.getElementById('copy').addEventListener('click', async () => {
+    const html = editor.innerHTML;
+    const text = editor.innerText;
+    try {
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([html], { type: 'text/html' }),
+        'text/plain': new Blob([text], { type: 'text/plain' }),
+      })]);
+      say('Copied rich text.');
+    } catch {
+      const sel = window.getSelection();                            // fallback: copy a selection
+      const range = document.createRange();
+      range.selectNodeContents(editor);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      say(document.execCommand('copy') ? 'Copied rich text.' : 'Copy failed, press Ctrl/Cmd+C.');
+    }
+  });
+
+  editor.addEventListener('input', render);
+  document.execCommand('defaultParagraphSeparator', false, 'p');
+  render();
+})();
+</script>
+
+  </body>
+</html>
